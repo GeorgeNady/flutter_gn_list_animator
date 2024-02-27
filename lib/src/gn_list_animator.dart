@@ -1,29 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
 
-class ListAnimator extends StatefulWidget {
-  final List<Widget> data;
+class GnListAnimator extends StatefulWidget {
+  final List<Widget> children;
   final int? durationInMillis;
   final double? verticalOffset;
   final double? horizontalOffset;
+  final bool shrinkWrap;
   final EdgeInsetsGeometry? padding;
   final Curve? curve;
 
-  const ListAnimator({
+  const GnListAnimator({
     super.key,
-    required this.data,
+    required this.children,
     this.durationInMillis,
     this.verticalOffset,
     this.horizontalOffset,
+    this.shrinkWrap = true,
     this.padding,
     this.curve,
   });
 
   @override
-  _ListAnimatorState createState() => _ListAnimatorState();
+  _GnListAnimatorState createState() => _GnListAnimatorState();
 }
 
-class _ListAnimatorState extends State<ListAnimator> {
+class _GnListAnimatorState extends State<GnListAnimator> {
   @override
   Widget build(BuildContext context) {
     return AnimationLimiter(
@@ -31,8 +33,8 @@ class _ListAnimatorState extends State<ListAnimator> {
         clipBehavior: Clip.none,
         padding: widget.padding,
         physics: const ScrollPhysics(),
-        shrinkWrap: true,
-        itemCount: widget.data.length,
+        shrinkWrap: widget.shrinkWrap,
+        itemCount: widget.children.length,
         itemBuilder: (_, index) => AnimationConfiguration.staggeredList(
           position: index,
           delay: Duration(milliseconds: widget.durationInMillis ?? 100),
@@ -41,7 +43,7 @@ class _ListAnimatorState extends State<ListAnimator> {
             duration: const Duration(milliseconds: 300),
             verticalOffset: widget.verticalOffset ?? 50.0,
             child: FadeInAnimation(
-              child: widget.data[index],
+              child: widget.children[index],
             ),
           ),
         ),

@@ -1,6 +1,6 @@
 name: gn_list_animator
 description: "Custom List Animator Widget"
-version: 0.0.1
+version: 1.0.1
 homepage: none
 path: none
 
@@ -12,6 +12,7 @@ dependencies:
   flutter:
     sdk: flutter
   flutter_staggered_animations: ^1.1.1
+  get: ^4.6.5
 
 dev_dependencies:
   flutter_test:

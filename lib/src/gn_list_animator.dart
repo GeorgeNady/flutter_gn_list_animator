@@ -36,7 +36,7 @@ class _GnListAnimatorState extends State<GnListAnimator> {
   Widget build(BuildContext context) {
     return AnimationLimiter(
       child: ListView.separated(
-        controller: controller,
+        controller: widget.controller,
         clipBehavior: Clip.none,
         padding: widget.padding,
         physics: const ScrollPhysics(),

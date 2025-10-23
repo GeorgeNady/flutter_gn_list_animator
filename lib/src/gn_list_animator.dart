@@ -11,6 +11,7 @@ class GnListAnimator extends StatefulWidget {
   final EdgeInsetsGeometry? padding;
   final Axis scrollDirection;
   final Curve? curve;
+  final ScrollController? controller;
 
   const GnListAnimator({
     super.key,
@@ -23,6 +24,7 @@ class GnListAnimator extends StatefulWidget {
     this.padding,
     this.scrollDirection = Axis.vertical,
     this.curve,
+    this.controller,
   });
 
   @override
@@ -34,6 +36,7 @@ class _GnListAnimatorState extends State<GnListAnimator> {
   Widget build(BuildContext context) {
     return AnimationLimiter(
       child: ListView.separated(
+        controller: controller,
         clipBehavior: Clip.none,
         padding: widget.padding,
         physics: const ScrollPhysics(),

@@ -1,3 +1,8 @@
+## 1.1.1
+
+* **Feature**: Added `firstVisibleIndex` and `lastVisibleIndex` to `GnListAnimatorController` for real-time position tracking.
+* **Feature**: Exposed `itemPositions` for advanced visibility analysis.
+
 ## 1.1.0
 
 * **Feature**: Merged `ScrollController` and `ItemScrollController` into a single `GnListAnimatorController`.

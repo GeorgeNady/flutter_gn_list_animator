@@ -12,6 +12,7 @@ A highly customizable Flutter widget for creating animated lists with smooth ind
 - **Staggered Animations**: Apply smooth entrance animations (slide, fade) to list items automatically.
 - **Index-Based Scrolling**: Jump or scroll to any item in the list by its index.
 - **Position Tracking**: Get the current visible indices (`firstVisibleIndex`, `lastVisibleIndex`) at any time.
+- **Real-Time Observation**: Observe visible indices in real-time using `ValueListenable` for efficient UI updates.
 - **Flexible Layout**: Supports vertical and horizontal scrolling, separators, and custom physics.
 - **Hybrid Rendering**: Automatically chooses between `ListView` and `ScrollablePositionedList` for optimal performance.
 
@@ -35,7 +36,7 @@ dependencies:
   gn_list_animator:
     git:
       url: https://github.com/GeorgeNady/flutter_gn_list_animator.git
-      ref: v1.1.1
+      ref: v1.1.2
 ```
 
 ## Usage
@@ -77,6 +78,16 @@ void _goToItemTen() {
 void _checkPosition() {
   print("First visible index: ${_controller.firstVisibleIndex}");
   print("Last visible index: ${_controller.lastVisibleIndex}");
+}
+
+// Observe indices in real-time (Best Solution)
+Widget _buildVisibleIndexDisplay() {
+  return ValueListenableBuilder<int?>(
+    valueListenable: _controller.firstVisibleIndexListenable,
+    builder: (context, firstIndex, _) {
+      return Text("Top Item: $firstIndex");
+    },
+  );
 }
 
 @override

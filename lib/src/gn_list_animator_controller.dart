@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/widgets.dart';
 import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 
@@ -6,6 +7,37 @@ import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
 class GnListAnimatorController extends ScrollController {
   final ItemScrollController itemScrollController = ItemScrollController();
   final ItemPositionsListener itemPositionsListener = ItemPositionsListener.create();
+
+  late final ValueNotifier<int?> _firstVisibleIndexNotifier;
+  late final ValueNotifier<int?> _lastVisibleIndexNotifier;
+
+  GnListAnimatorController() {
+    _firstVisibleIndexNotifier = ValueNotifier<int?>(null);
+    _lastVisibleIndexNotifier = ValueNotifier<int?>(null);
+
+    // Listen to position changes to update our notifiers
+    itemPositionsListener.itemPositions.addListener(_updateIndices);
+  }
+
+  /// A listenable for the index of the first visible item.
+  /// Use this with [ValueListenableBuilder] to update the UI in real-time.
+  ValueListenable<int?> get firstVisibleIndexListenable => _firstVisibleIndexNotifier;
+
+  /// A listenable for the index of the last visible item.
+  /// Use this with [ValueListenableBuilder] to update the UI in real-time.
+  ValueListenable<int?> get lastVisibleIndexListenable => _lastVisibleIndexNotifier;
+
+  void _updateIndices() {
+    final first = firstVisibleIndex;
+    final last = lastVisibleIndex;
+
+    if (_firstVisibleIndexNotifier.value != first) {
+      _firstVisibleIndexNotifier.value = first;
+    }
+    if (_lastVisibleIndexNotifier.value != last) {
+      _lastVisibleIndexNotifier.value = last;
+    }
+  }
 
   /// Scrolls to the item at [index].
   void scrollToIndex(
@@ -58,5 +90,13 @@ class GnListAnimatorController extends ScrollController {
         .reduce((ItemPosition max, ItemPosition position) =>
             position.itemTrailingEdge > max.itemTrailingEdge ? position : max)
         .index;
+  }
+
+  @override
+  void dispose() {
+    itemPositionsListener.itemPositions.removeListener(_updateIndices);
+    _firstVisibleIndexNotifier.dispose();
+    _lastVisibleIndexNotifier.dispose();
+    super.dispose();
   }
 }

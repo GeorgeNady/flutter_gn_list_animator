@@ -1,3 +1,8 @@
+## 1.1.2
+
+* **Feature**: Added `firstVisibleIndexListenable` and `lastVisibleIndexListenable` to `GnListAnimatorController`.
+* **Enhancement**: Real-time UI updates now possible using `ValueListenableBuilder` without rebuilding the whole list.
+
 ## 1.1.1
 
 * **Feature**: Added `firstVisibleIndex` and `lastVisibleIndex` to `GnListAnimatorController` for real-time position tracking.

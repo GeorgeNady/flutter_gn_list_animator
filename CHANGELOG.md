@@ -1,9 +1,22 @@
+## 1.1.0
+
+* **Feature**: Merged `ScrollController` and `ItemScrollController` into a single `GnListAnimatorController`.
+* **Feature**: Added `onScrollUp` and `onScrollDown` callbacks to `GnListAnimator` for easy scroll direction detection.
+* **Architecture**: Unified controller logic - `GnListAnimatorController` now extends `ScrollController`.
+    * Supports standard `addListener`, `offset`, and `jumpTo`.
+    * Adds `scrollToIndex` and `jumpToIndex`.
+* **Refactor**: Widget automatically switches between `ListView` and `ScrollablePositionedList` based on the controller type.
+
+## 1.0.9
+
+* **Fix**: Restored `controller` (`ScrollController`) support for backward compatibility.
+* **Feature**: Added conditional rendering: uses `ScrollablePositionedList` when `gnController` is provided, otherwise falls back to standard `ListView`.
+
 ## 1.0.8
 
 * **Feature**: Integrated `scrollable_positioned_list` for index-based scrolling.
 * **Feature**: Added `GnListAnimatorController` to manage scrolling and jumping to specific items.
 * **Enhancement**: Added `clipBehavior` and `physics` parameters to `GnListAnimator`.
-* **Refactor**: Improved widget structure for better performance and flexibility.
 
 ## 1.0.0
 

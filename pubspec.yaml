@@ -1,6 +1,6 @@
 name: gn_list_animator
 description: "A customizable Flutter widget for animated lists with smooth index-based scrolling and staggered animations."
-version: 1.0.8
+version: 1.1.0
 homepage: none
 path: none
 

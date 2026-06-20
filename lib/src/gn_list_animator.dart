@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
+import 'package:scrollable_positioned_list/scrollable_positioned_list.dart';
+import 'gn_list_animator_controller.dart';
 
 class GnListAnimator extends StatefulWidget {
   final List<Widget> children;
@@ -8,10 +10,12 @@ class GnListAnimator extends StatefulWidget {
   final double? verticalOffset;
   final double? horizontalOffset;
   final bool shrinkWrap;
-  final EdgeInsetsGeometry? padding;
+  final EdgeInsets? padding;
   final Axis scrollDirection;
   final Curve? curve;
-  final ScrollController? controller;
+  final GnListAnimatorController? gnController;
+  final ScrollPhysics? physics;
+  final Clip clipBehavior;
 
   const GnListAnimator({
     super.key,
@@ -24,7 +28,9 @@ class GnListAnimator extends StatefulWidget {
     this.padding,
     this.scrollDirection = Axis.vertical,
     this.curve,
-    this.controller,
+    this.gnController,
+    this.physics,
+    this.clipBehavior = Clip.none,
   });
 
   @override
@@ -35,11 +41,11 @@ class _GnListAnimatorState extends State<GnListAnimator> {
   @override
   Widget build(BuildContext context) {
     return AnimationLimiter(
-      child: ListView.separated(
-        controller: widget.controller,
-        clipBehavior: Clip.none,
+      child: ScrollablePositionedList.separated(
+        itemScrollController: widget.gnController?.itemScrollController,
+        itemPositionsListener: widget.gnController?.itemPositionsListener,
         padding: widget.padding,
-        physics: const ScrollPhysics(),
+        physics: widget.physics ?? const ScrollPhysics(),
         shrinkWrap: widget.shrinkWrap,
         itemCount: widget.children.length,
         scrollDirection: widget.scrollDirection,

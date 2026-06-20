@@ -1,39 +1,88 @@
-<!--
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# gn_list_animator
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages).
+A highly customizable Flutter widget for creating animated lists with smooth index-based scrolling and beautiful staggered animations.
 
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages).
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+[![GitHub license](https://img.shields.io/github/license/GeorgeNady/flutter_gn_list_animator)](https://github.com/GeorgeNady/flutter_gn_list_animator/blob/main/LICENSE)
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+- **Staggered Animations**: Easily apply entrance animations (slide, fade) to list items.
+- **Index-Based Scrolling**: Jump or scroll to any item in the list by its index using `GnListAnimatorController`.
+- **Customizable Animations**: Control duration, vertical/horizontal offsets, and animation curves.
+- **Flexible Layout**: Supports vertical and horizontal scrolling, separators, and custom physics.
+- **Easy Integration**: Works with standard Flutter widgets and fits seamlessly into any UI.
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+Since this package is hosted on GitHub, you can add it to your `pubspec.yaml` using:
+
+```yaml
+dependencies:
+  gn_list_animator:
+    git:
+      url: https://github.com/GeorgeNady/flutter_gn_list_animator.git
+      ref: main
+```
 
 ## Usage
 
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder.
+### Simple Example
 
 ```dart
-const like = 'sample';
+GnListAnimator(
+  children: List.generate(
+    20,
+    (index) => Card(
+      child: ListTile(
+        title: Text('Item $index'),
+      ),
+    ),
+  ),
+)
 ```
 
-## Additional information
+### With Controller (Scroll to Index)
 
-TODO: Tell users more about the package: where to find more information, how to
-contribute to the package, how to file issues, what response they can expect
-from the package authors, and more.
+```dart
+final GnListAnimatorController _controller = GnListAnimatorController();
+
+// Use the controller to scroll to a specific index
+void _scrollToFifthItem() {
+  _controller.scrollToIndex(
+    5,
+    duration: Duration(milliseconds: 800),
+    curve: Curves.bounceOut,
+  );
+}
+
+@override
+Widget build(BuildContext context) {
+  return GnListAnimator(
+    gnController: _controller,
+    children: myWidgets,
+  );
+}
+```
+
+## Parameters
+
+### GnListAnimator
+
+| Parameter | Type | Default | Description |
+|---|---|---|---|
+| `children` | `List<Widget>` | **Required** | The list of widgets to animate. |
+| `gnController` | `GnListAnimatorController?` | `null` | Controller for index-based scrolling and jumping. |
+| `separator` | `Widget?` | `null` | Optional widget to display between items. |
+| `durationInMillis` | `int?` | `100` | Stagger delay between item animations. |
+| `verticalOffset` | `double?` | `50.0` | Initial vertical offset for the slide animation. |
+| `horizontalOffset` | `double?` | `null` | Initial horizontal offset for the slide animation. |
+| `padding` | `EdgeInsetsGeometry?` | `null` | Padding around the list. |
+| `scrollDirection` | `Axis` | `Axis.vertical` | The direction in which the list scrolls. |
+| `curve` | `Curve?` | `Curves.easeInOut` | The animation curve for item entrance. |
+| `physics` | `ScrollPhysics?` | `ScrollPhysics()` | How the list should respond to user input. |
+| `shrinkWrap` | `bool` | `true` | Whether the list should wrap its content. |
+| `clipBehavior` | `Clip` | `Clip.none` | How to clip the list's content. |
+
+## License
+
+MIT
